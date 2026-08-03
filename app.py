@@ -67,5 +67,5 @@ def index():
 
 
 if __name__ == '__main__':
-    initialise_database()
+    # initialise_database()
     app.run(debug=True)

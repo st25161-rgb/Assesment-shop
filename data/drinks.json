@@ -1,0 +1,14 @@
+{
+    "drink_name": "Coke",
+    "drink_type": "Soda",
+    "sizes_available":[
+        {
+            "size": "small",
+            "price": 1.50
+        },
+        {
+            "size": "large",
+            "price":3.00
+        }
+    ]
+}
