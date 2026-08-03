@@ -26,6 +26,9 @@ def load_pizza_data():
         pizza = {}
     
     return pizza
+@app.route("/base")
+def base():
+    return render_template("base.html")
 
 @app.route('/')
 def index():
