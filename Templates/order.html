@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %} Order - Dream Pizzas {% endblock %}
+{% block content %}
+<!-- Tells what this page is -->
+    <div class="introduction">
+        <h1> Order Your Dream Pizza </h1>
+        <p> Choose from our delicious selection of pizzas and drinks! </p>
+    </div>
+
+    <div class="order_form">
+        <form>
+            <legend> Select Your Pizza</legend>
+            <select name="pizza" id="pizza">
+                {% for pizza, details in pizza.items() %}
+                <option value="{{ pizza }}">{{ pizza }} - $ {{ details['price'] }} </option>
+                {% endfor %}
+            </select>
+        </form>
+    </div>
+{% endblock %}

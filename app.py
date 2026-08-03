@@ -7,63 +7,49 @@ from flask import Flask, render_template, request, session, flash, redirect, url
 app = Flask(__name__)
 app.secret_key = 'Thereisnotamanhere'
 
-def load_deltarune_data():
+def load_drinks_data():
     try: 
-        with open('data/Deltarune.json') as file:
-            deltarune = json.load(file)
+        with open('data/drinks.json') as file:
+            drinks = json.load(file)
     except (FileNotFoundError, json.JSONDecodeError) as e:
-        print(f"Error loading deltarune records data: {e}")
-        deltarune = {}
+        print(f"Error loading drinks data: {e}")
+        drinks = {}
     
-    return deltarune
+    return drinks
 
-def load_jpop_data():
+def load_pizza_data():
     try: 
-        with open('data/Jpop.json') as file:
-            jpop = json.load(file)
+        with open('data/pizza.json') as file:
+            pizza = json.load(file)
     except (FileNotFoundError, json.JSONDecodeError) as e:
-        print(f"Error loading jpop records data: {e}")
-        jpop = {}
+        print(f"Error loading pizza data: {e}")
+        pizza = {}
     
-    return jpop
-
-
-def load_rock_data():
-    try: 
-        with open('data/Rock.json') as file:
-            rock = json.load(file)
-    except (FileNotFoundError, json.JSONDecodeError) as e:
-        print(f"Error loading rock records data: {e}")
-        rock = {}
-    
-    return rock
-
-
-def load_metal_data():
-    try: 
-        with open('data/Metal.json') as file:
-            metal = json.load(file)
-    except (FileNotFoundError, json.JSONDecodeError) as e:
-        print(f"Error loading metal records data: {e}")
-        metal = {}
-    
-    return metal
+    return pizza
 
 @app.route('/')
 def index():
-    deltarune = load_deltarune_data
-    jpop = load_jpop_data
-    metal = load_metal_data
-    rock = load_rock_data
-    
-    return render_template("index.html",
-                            deltarune=deltarune,
-                            jpop=jpop,
-                            metal=metal,
-                            rock=rock
-                            )    
+    drinks = load_drinks_data()
+    pizza = load_pizza_data()
+    return render_template("index.html")
 
+@app.route('/about')
+def about():
+    return render_template("about.html")
 
+@app.route('/order')
+def order():
+    drinks = load_drinks_data()
+    pizza = load_pizza_data()
+    return render_template("order.html", drinks=drinks, pizza=pizza)
+
+@app.route('/invoice')
+def invoice():
+    return render_template("invoice.html")
+
+@app.route('/your_cart')
+def your_cart():
+    return render_template("your_cart.html")
 
 
 if __name__ == '__main__':

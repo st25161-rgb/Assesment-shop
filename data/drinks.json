@@ -1,7 +1,8 @@
+[
 {
     "drink_name": "Coke",
-    "drink_type": "Soda",
-    "sizes_available":[
+    "drink_type": "drinks",
+    "sizes_available":  [
         {
             "size": "small",
             "price": 1.50
@@ -11,4 +12,65 @@
             "price":3.00
         }
     ]
+},
+
+{
+    "drink_name": "L&P",
+    "drink_type": "drinks",
+    "sizes_available":  [
+        {
+            "size": "small",
+            "price": 1.50
+        },
+        {
+            "size": "large",
+            "price":3.00
+        }
+    ]
+},
+
+{
+    "drink_name": "Pepsi",
+    "drink_type": "drinks",
+    "sizes_available":  [
+        {
+            "size": "small",
+            "price": 1.50
+        },
+        {
+            "size": "large",
+            "price":3.00
+        }
+    ]
+},
+
+{
+    "drink_name": "Fanta",
+    "drink_type": "drinks",
+    "sizes_available":  [
+        {
+            "size": "small",
+            "price": 1.50
+        },
+        {
+            "size": "large",
+            "price":3.00
+        }
+    ]
+},
+
+{
+    "drink_name": "Water",
+    "drink_type": "drinks",
+    "sizes_available":  [
+        {
+            "size": "small",
+            "price": 1.00
+        },
+        {
+            "size": "large",
+            "price":1.50
+        }
+    ]
 }
+]

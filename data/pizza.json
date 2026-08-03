@@ -1,0 +1,63 @@
+[
+    {
+        "pizza_name": "Margherita",
+        "pizza_ingredients": ["tomato sauce", "mozzarella cheese", "fresh basil"],
+        "pizza_type": "vegetarian",
+        "sizes_available": [
+            {
+                "size": "small",
+                "price": 5.00
+            },
+            {
+                "size": "medium",
+                "price": 7.50
+            },
+            {
+                "size": "large",
+                "price": 10.00
+            }
+        ]
+    },
+    
+    {
+        "pizza_name": "Cheesy Meat Pizza",
+        "pizza_ingredients": ["tomato sauce", "mozzarella cheese", "fresh basil", "chicken", "oregano"],
+        "pizza_type": "Meat",
+        "sizes_available": [
+            {
+                "size": "small",
+                "price": 7.00
+            },
+            {
+                "size": "medium",
+                "price": 9.50
+            },
+            {
+                "size": "large",
+                "price": 12.50
+            }
+        ]
+    },
+
+    {
+            "pizza_name": "Extra meaty pizza",
+        "pizza_ingredients": ["tomato sauce", "mozzarella cheese", "fresh basil", "pepperoni", "sausage", "bacon", "ham"],
+        "pizza_type": "Meat",
+        "sizes_available": [
+            {
+                "size": "small",
+                "price": 8.00
+            },
+            {
+                "size": "medium",
+                "price": 10.00
+            },
+            {
+                "size": "large",
+                "price": 13.50
+            }
+        ]
+    }
+
+
+]
