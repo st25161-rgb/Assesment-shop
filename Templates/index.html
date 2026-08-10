@@ -9,11 +9,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <!-- Font embed links -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Acme&display=swap" rel="stylesheet">
 
-    <title>Dream Pizzas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Aboreto&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
 </head>
 <body>
     <main>
+        <div class="pizzaform">
+
+            <h2 id="subtitle">Select your pizza</h2>
+
+            {% for p in pizza %}
+            <div class="pizzaoption">
+                <h2 id="item_title">{{ p.pizza_name }}</h2>
+            </div>
+            {% endfor %}
+            
+        </div>
+        
+    
         
         
     </main>

@@ -1,0 +1,11 @@
+<!-- form action="{{ url_for('add_to_cart')}}" method="POST">
+                <legend> Order Pizza</legend>
+                <fieldset>
+                    <select name="pizza">
+                        {% for pizza, details in pizza.items%}
+                        <option value="{{ pizza_name }}" >{{ pizza_name }} </option>
+                        <input type="text"> {{  details['pizza_ingredients']}}
+                        {% endfor %}
+                    </select>
+                </fieldset>
+            </form> -->

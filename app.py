@@ -26,6 +26,8 @@ def load_pizza_data():
         pizza = {}
     
     return pizza
+
+
 @app.route("/base")
 def base():
     return render_template("base.html")
@@ -34,7 +36,7 @@ def base():
 def index():
     drinks = load_drinks_data()
     pizza = load_pizza_data()
-    return render_template("index.html")
+    return render_template("index.html", drinks=drinks, pizza=pizza)
 
 @app.route('/about')
 def about():
@@ -52,6 +54,10 @@ def invoice():
 
 @app.route('/your_cart')
 def your_cart():
+    return render_template("your_cart.html")
+
+@app.route('/add_to_cart')
+def add_to_cart():
     return render_template("your_cart.html")
 
 

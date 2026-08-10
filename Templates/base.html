@@ -5,21 +5,41 @@
     <!-- <head> The information for the site to pull style and stuff from -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <title>{% block title %}Dream Pizzas{% endblock %}</title>
+        <!-- Font embed links -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Aboreto&display=swap" rel="stylesheet">
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Aboreto&display=swap" rel="stylesheet">
 
 </head>
 <body>
     <header>
         <!-- The sub head for the store -->
-        <h1 id="mainhead" id="title">Dream Pizzas</h1>
+        <h1  id="base-title">Dream Pizzas</h1>
         <nav>
-            <a href="{{ url_for('index') }}">Home</a>
-            <a href="{{url_for('about') }}">About</a>
-            <a href="{{ url_for('your_cart') }}">Order History</a>
+            <ul class="nav-links">
+                <li>
+                    <a href="{{ url_for('index') }}">Home</a>
+                </li>
+
+                <li>
+                    <a href="{{url_for('about') }}">About</a>
+                </li>
+
+                <li>
+                    <a href="{{ url_for('your_cart') }}">Cart</a>
+                </li>
+            </ul>
         </nav>
     </header>
+
     <main>
         {% block content %}{% endblock %}
     </main>
+
     <footer>
         <p>&copy;Dream Pizzas</p>
     </footer>
