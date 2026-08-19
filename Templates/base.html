@@ -5,6 +5,7 @@
     <!-- <head> The information for the site to pull style and stuff from -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <title>{% block title %}Dream Pizzas{% endblock %}</title>
+
         <!-- Font embed links -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -37,6 +38,7 @@
     </header>
 
     <main>
+        <!-- Other html code goes in here when applying base html -->
         {% block content %}{% endblock %}
     </main>
 

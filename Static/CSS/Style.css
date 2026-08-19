@@ -33,9 +33,33 @@ body {
     background-color: #8a0000;
     color: white;
 }
-/*Sty;ing specific texts/texts */
+
+/*Styling specific texts/texts */
 #subtitle {
     font-size: 40px;
+}
+
+#pizzaname {
+    font-family: "Acme", sans-serif;
+    font-weight: 400;
+    font-style: normal;;
+
+    font-size: 40px;
+}
+
+#list_title {
+    font-family: "Acme", sans-serif;
+    font-weight: 400;
+    font-style: normal;;
+    font-size: 30px;
+}
+
+#list_text {
+    font-family: "Acme", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    text-decoration: none;
+    font-size: 25px;
 }
 
 #base-title {
@@ -56,23 +80,69 @@ h2 {
     font-size:60px;
 }
 
-.pizzaform {
-    margin-left: 140px;
-    width: 90%;
+.pizzaform{
+    
     border:#8a0000 solid;
+    margin-left: 140px;
 }
+
+.menu_border {
+    border-color: 5px solid #8a0000;
+}
+
 
 .pizzaoption {
     border: #8a0000 groove;
-    padding: 10px 20px 0px 20px;
-    margin: 20px
-
+    padding: 5px 0px 0px 20px;
+    margin: 20px;
+    position: relative;
+    display: inline-block;
+    display:flex;
+    align-content: center;
+    cursor:pointer;
 }
 
-#item_title {
-    font-size: 30px;
-    text-decoration: underline;
+
+
+
+
+/* Styling for the tabs so they work like tabs */
+
+    /* spacing the tabs */
+.tab_select {
+    display: flex;
+    gap: 8px;
+}
+
+.tab_radio, .tab_content {
+    display: none;
+}
+
+
+.tablink {
+    padding: 8px 14px;
+    background-color: #ab5f5f;
+    border: 2px solid #720000;
+    cursor: pointer;
+
+
+    font-family: "Acme", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    color: azure;
+    position: relative;
+    margin: 0px 0px 0px 25px;
+}
+
+.tab_radio:checked + .tablink{
+    background-color: #ddd;
+    font-weight: bold;
+}
+
+.tab_select:has(#tab-1:checked) ~ .tab_content_div .content_1,
+.tab_select:has(#tab-2:checked) ~ .tab_content_div .content_2,
+.tab_select:has(#tab-3:checked) ~ .tab_content_div .content_3 {
+    display: block;
 }
 
 }
-

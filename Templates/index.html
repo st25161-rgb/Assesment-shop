@@ -3,8 +3,6 @@
 {% block title %} Home - Dream Pizzas {% endblock %}
 
 {% block content %}
-<!DOCTYPE html>
-<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,28 +15,45 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Aboreto&display=swap" rel="stylesheet">
-
+    
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 
 </head>
-<body>
-    <main>
-        <div class="pizzaform">
+<main>    
+    <div  id="pizzamenu">
+        <div  class="pizzaform">
+            <h2 id="subtitle"> Select Your Pizza </h2>
 
-            <h2 id="subtitle">Select your pizza</h2>
 
-            {% for p in pizza %}
-            <div class="pizzaoption">
-                <h2 id="item_title">{{ p.pizza_name }}</h2>
+
+                <!-- pizza option tabs -->
+            <div class="tab_select">
+                <!-- django for json files -->
+                {% for p in pizza %}
+                    <input type="radio" id="tab-{{loop.index}}" name="item_tab" class="tab_radio">
+                    <label for="tab-{{loop.index}}" class="tablink"> {{p.pizza_name}}</label>
+                {% endfor %}
+
             </div>
-            {% endfor %}
             
+
+            <div class="tab_content_div">   
+                {% for p in pizza%}
+                    <div class="tab_content content_{{loop.index}}"> <!-- eahc content_{{ loop_index}} makes a individual div for each pizza -->
+                        <div class="pizzaoption_text">
+                            <p id="list_title"> Ingredients: </p>
+                            <ul id="list_text">
+                                {% for ingredients in p.pizza_ingredients  %} 
+                                    <li> {{ ingredients }} </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
         </div>
+    </div>
         
-    
-        
-        
-    </main>
-</body>
-</html>         
+</main>
 {% endblock %}
+

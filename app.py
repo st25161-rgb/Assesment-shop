@@ -2,14 +2,16 @@ import datetime
 import json
 import sqlite3
 
+
 from flask import Flask, render_template, request, session, flash, redirect, url_for
 
 app = Flask(__name__)
 app.secret_key = 'Thereisnotamanhere'
+#defining the functions for data files
 
 def load_drinks_data():
     try: 
-        with open('data/drinks.json') as file:
+        with open('Data/drinks.json') as file:
             drinks = json.load(file)
     except (FileNotFoundError, json.JSONDecodeError) as e:
         print(f"Error loading drinks data: {e}")
@@ -19,15 +21,15 @@ def load_drinks_data():
 
 def load_pizza_data():
     try: 
-        with open('data/pizza.json') as file:
+        with open('Data/pizza.json') as file:
             pizza = json.load(file)
     except (FileNotFoundError, json.JSONDecodeError) as e:
         print(f"Error loading pizza data: {e}")
-        pizza = {}
+        pizza = []
     
     return pizza
 
-
+# the routes for the template files or fucntions to
 @app.route("/base")
 def base():
     return render_template("base.html")
