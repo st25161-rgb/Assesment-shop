@@ -20,7 +20,7 @@
 
 </head>
 <main>    
-    <div  id="pizzamenu">
+    <div  id="menu">
         <div  class="pizzaform">
             <h2 id="subtitle"> Select Your Pizza </h2>
 
@@ -28,19 +28,23 @@
 
                 <!-- pizza option tabs -->
             <div class="tab_select">
-                <!-- django for json files -->
+                <!-- django for json files and tab-->
                 {% for p in pizza %}
                     <input type="radio" id="tab-{{loop.index}}" name="item_tab" class="tab_radio">
+                    
                     <label for="tab-{{loop.index}}" class="tablink"> {{p.pizza_name}}</label>
                 {% endfor %}
+                <input type="radio" id="tab-drinks" name="item_tab" class="tab_radio">
+                <label for="tab-drinks" class="tablink"> Drinks</label>
 
             </div>
             
 
             <div class="tab_content_div">   
                 {% for p in pizza%}
-                    <div class="tab_content content_{{loop.index}}"> <!-- eahc content_{{ loop_index}} makes a individual div for each pizza -->
-                        <div class="pizzaoption_text">
+                    <div class="tab_content content_{{loop.index}} option_text"> <!-- each content_{{ loop_index}} makes a individual div for each pizza -->
+                            <!-- Pizza ingredients -->
+                        <div class="ingredients">
                             <p id="list_title"> Ingredients: </p>
                             <ul id="list_text">
                                 {% for ingredients in p.pizza_ingredients  %} 
@@ -48,11 +52,40 @@
                                 {% endfor %}
                             </ul>
                         </div>
+
+                        <div class="description">
+                            <!-- pizza description and information -->
+                            {% for pizza_type in p.pizza_type %}
+                            <p id="pizzatype_text">Type: {{ pizza_type }}</p>
+                            {% endfor %}
+                            {% for description in p.description%}
+                            <p id="description"> {{ description }}</p>
+                            {% endfor %}
+
+                            <!-- choosing pizza -->
+
+                        </div>
+
+                        <div class="picture_and_cart">
+                            {% for img in p.picture%}
+                            <img src="{{img}}" id="img">                            
+                            {%endfor%}
+                        </div>
                     </div>
                 {% endfor %}
             </div>
+
+            <div class="tab_content_div">
+                {% for d in drinks %}
+                <div class="tab_content content_{{loop.index}} option_text">
+
+                </div>
+                {% endfor %}
+            </div>
+
         </div>
-    </div>
+
+
         
 </main>
 {% endblock %}

@@ -80,6 +80,16 @@ h2 {
     font-size:60px;
 }
 
+#pizzatype_text {
+    font-family: "Aboreto", system-ui;
+    font-weight: 400;
+    font-style: normal;
+    position: relative;
+    text-decoration: underline;
+    font-size: 20px;
+    text-decoration-color: rgb(0, 0, 0) ;
+}
+
 .pizzaform{
     
     border:#8a0000 solid;
@@ -103,7 +113,11 @@ h2 {
 }
 
 
-
+/* Styling image size */
+#img {
+    width: 80%;
+    height: 80%;
+}
 
 
 /* Styling for the tabs so they work like tabs */
@@ -112,12 +126,20 @@ h2 {
 .tab_select {
     display: flex;
     gap: 8px;
+    margin-bottom: 5px;
 }
 
-.tab_radio, .tab_content {
+.tab_radio {
     display: none;
 }
 
+.tab_content {
+    display:none;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap:20px;
+    align-items: start;
+    padding:20px;
+}
 
 .tablink {
     padding: 8px 14px;
@@ -134,15 +156,20 @@ h2 {
     margin: 0px 0px 0px 25px;
 }
 
-.tab_radio:checked + .tablink{
-    background-color: #ddd;
+.tab_radio:checked + .tablink{ /*Shows the tab link as activated  */
+    background-color: #9e3a26;
     font-weight: bold;
 }
 
 .tab_select:has(#tab-1:checked) ~ .tab_content_div .content_1,
 .tab_select:has(#tab-2:checked) ~ .tab_content_div .content_2,
-.tab_select:has(#tab-3:checked) ~ .tab_content_div .content_3 {
-    display: block;
+.tab_select:has(#tab-3:checked) ~ .tab_content_div .content_3,
+.tab_select:has(#tab-4:checked) ~ .tab_content_div .content_4,
+.tab_select:has(#tab-5:checked) ~ .tab_content_div .content_5,
+.tab_select:has(#tab-6:checked) ~ .tab_content_div .content_6   {
+    display: grid;
 }
-
+.description  {
+    width: 200px;
+}
 }
