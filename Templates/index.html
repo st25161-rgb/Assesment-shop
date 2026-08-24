@@ -22,7 +22,7 @@
 <main>    
     <div  id="menu">
         <div  class="pizzaform">
-            <h2 id="subtitle"> Select Your Pizza </h2>
+            <h2 id="subtitle"> Select your menu item </h2>
 
 
 
@@ -34,8 +34,8 @@
                     
                     <label for="tab-{{loop.index}}" class="tablink"> {{p.pizza_name}}</label>
                 {% endfor %}
-                <input type="radio" id="tab-drinks" name="item_tab" class="tab_radio">
-                <label for="tab-drinks" class="tablink"> Drinks</label>
+                <input type="radio" id="tab-drink" name="item_tab" class="tab_radio">
+                <label for="tab-drink" class="tablink"> Drinks</label>
 
             </div>
             
@@ -77,8 +77,30 @@
 
             <div class="tab_content_div">
                 {% for d in drinks %}
-                <div class="tab_content content_{{loop.index}} option_text">
+                <div class="tab_content content_drink option_text">
+                    {% for drink_name in d.drink_name%}
+                    <h3 id="pizzatype_text">{{drink_name}} </h3>
+                    {% endfor %}
+                    {% for s in d.sizes_available%}
+                    {% for drink_name in d.drink_name %}
+                    {% for size in s.size %}
+                    {% for price in s.price%}
+                    <form>
+                        <fieldset>
 
+
+                            <label>
+                                <input type="checkbox" name="drinks" value="{{ drink }}">
+                                {{ drink_name }} {{ size }}: $ {{ price }}
+                            </label>
+
+                            <button type="submit" id="submit"> Add to cart</button>
+                        </fieldset>
+                    </form>
+                    {% endfor %}
+                    {% endfor %}
+                    {% endfor %}
+                    {% endfor %}
                 </div>
                 {% endfor %}
             </div>
