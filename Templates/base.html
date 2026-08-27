@@ -7,13 +7,20 @@
     <title>{% block title %}Dream Pizzas{% endblock %}</title>
 
         <!-- Font embed links -->
+
+
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Aboreto&display=swap" rel="stylesheet">
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Aboreto&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Acme&display=swap" rel="stylesheet">
+
 
 </head>
 <body>
@@ -21,17 +28,13 @@
         <!-- The sub head for the store -->
         <h1  id="base-title">Dream Pizzas</h1>
         <nav>
-            <ul class="nav-links">
+            <ul class="nav_links">
                 <li>
                     <a href="{{ url_for('index') }}">Home</a>
                 </li>
 
                 <li>
                     <a href="{{url_for('about') }}">About</a>
-                </li>
-
-                <li>
-                    <a href="{{ url_for('your_cart') }}">Cart</a>
                 </li>
             </ul>
         </nav>

@@ -4,7 +4,7 @@ body {
     background-color: #fff0ad;
 }
 
-.nav-links {
+.nav_links {
     list-style-type: none; /* removes the link effect*/
     margin:0px;
     padding:0px;
@@ -22,14 +22,14 @@ body {
     top:5px;
 }
 
-.nav-links a {
+.nav_links a {
     display: block;
     color: #8a0000;
     padding: 8px 16px;
     text-decoration: none;
 }
 
-.nav-links a:hover {
+.nav_links a:hover {
     background-color: #8a0000;
     color: white;
 }
@@ -161,6 +161,27 @@ h2 {
     font-weight: bold;
 }
 
+
+/* form styling for drinks */
+
+
+#submit  {
+    background-color: #ab5f5f;
+    padding:10px 7px;
+    color: azure;
+    font-size: 15px;
+    cursor: pointer;
+    font-family: "Figtree", sans-serif;
+    font-optical-sizing: auto;
+    border:#720000 solid;
+}
+
+#drink_selectshow {
+    background-color: antiquewhite;
+    font-family: "Acme", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
 
 /* This is for each tab div to show itself when selected */
 .tab_select:has(#tab-1:checked) ~ .tab_content_div .content_1,

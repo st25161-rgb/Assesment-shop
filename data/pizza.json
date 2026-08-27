@@ -9,16 +9,16 @@
         "picture": ["https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsNNYBxMAOIsRqJzkwfkNeK-LWn-7Ca2ckGitWxNhY5A&s=10"],
         "sizes_available": [
             {
-                "size": "small",
-                "price": 5.00
+                "size": ["Small"],
+                "price": [5.00]
             },
             {
-                "size": "medium",
-                "price": 7.50
+                "size": ["Medium"],
+                "price": ["7.50"]
             },
             {
-                "size": "large",
-                "price": 10.00
+                "size": ["Large"],
+                "price": ["10.00"]
             }
         ]
     },
@@ -35,16 +35,16 @@
         "picture": ["https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLbQIUYM0I9MjdoI-pDSTYlpXWnCC3cYtsE8QlXELAyqxrEWGa4pubRjE&s=10"],
         "sizes_available": [
             {
-                "size": "small",
-                "price": 7.00
+                "size": ["Small"],
+                "price": ["7.00"]
             },
             {
-                "size": "medium",
-                "price": 9.50
+                "size": ["Medium"],
+                "price": ["9.50"]
             },
             {
-                "size": "large",
-                "price": 12.50
+                "size": ["Large"],
+                "price": ["12.50"]
             }
         ]
     },
@@ -63,16 +63,16 @@
         "picture": ["https://www.thespruceeats.com/thmb/xuxwh4RIGcZMgaJE8u3SueM0SoA=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/aqIMG_4568fhor-0b89dc5c8c494ee9828ed29805791c5a.jpg"] ,
         "sizes_available": [
             {
-                "size": "small",
-                "price": 8.00
+                "size": ["Small"],
+                "price": ["8.00"]
             },
             {
-                "size": "medium",
-                "price": 10.00
+                "size": ["Medium"],
+                "price": ["10.00"]
             },
             {
-                "size": "large",
-                "price": 13.50
+                "size": ["Large"],
+                "price": ["13.50"]
             }
         ]
     },
@@ -90,16 +90,16 @@
         "picture":["https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLxKJPdo3vNAn6bJXao3Np3H2mz0X3BMQB7GnT6hOJC6lmkcGwMVgBY54x&s=10"],
         "sizes_available": [
             {
-                "size": "small",
-                "price": 6.00
+                "size": ["Small"],
+                "price": ["6.00"]
             },
             {
-                "size": "medium",
-                "price": 8.99
+                "size": ["Medium"],
+                "price": ["8.99"]
             },
             {
-                "size": "large",
-                "price": 10.99
+                "size": ["Large"],
+                "price": ["10.99"]
             }
         ]
     }
