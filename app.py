@@ -1,8 +1,6 @@
 import datetime
 import json
 import sqlite3
-
-
 from flask import Flask, render_template, request, session, flash, redirect, url_for
 
 app = Flask(__name__)
@@ -38,7 +36,10 @@ def base():
 def index():
     drinks = load_drink_data()
     pizzas = load_pizza_data()
-    return render_template("index.html", drinks=drinks, pizzas=pizzas)
+    cart_pizza = session.get('cart_pizza', {})
+    cart_drink = session.get('cart_drink', {})
+
+    return render_template("index.html", drinks=drinks, pizzas=pizzas, cart_pizza=cart_pizza, cart_drink=cart_drink)
 
 @app.route('/about')
 def about():
@@ -54,48 +55,57 @@ def order():
 def invoice():
     return render_template("invoice.html")
 
-@app.route('/add_to_cart', methods=["POST"])
-def add_to_cart():
-    drink = request.form['drink_id']
-    quantity = int(request.form['quantity']) # makes the quantity a number
-    drinks =load_drink_data()
-    pizza = request.form['pizza_id']
-    quantity = int(request.form['quantity']) # makes the quantity a number
-    pizzas =load_pizza_data()
-    cart = session.get('cart', {})
+@app.route('/add_to_cart_drinks', methods=["POST"])
+def add_to_cart_drink():
+    drink_info  = request.form.get('drink_id') #gets the information on drink name, size and price
+    quantity = int(request.form.get('quantity', 1)) #gets quantity of drinks from form (min is 1)
 
-    if drink not in drinks:
-            flash("invalid drink selected")
-            return redirect(url_for('index'))
+    cart_drink = session.get('cart_drink', {}) #gets the information from the form for drinks
+
+    if drink_info:
+        name, size, price = drink_info.split('_')
+        item_key = f"{name} ({size})"
+
+        if item_key in cart_drink: #if the drink is already in cart, it adds on the quantity in cart
+            cart_drink[item_key]['quantity'] += quantity
+        else: #if drink is not in cart, then it will add it into the cart dictionary and make the price a number not string
+            cart_drink[item_key] = {
+                'price': float(price),
+                'quantity': quantity   
+            }
+
+
+        session['cart_drink'] = cart_drink #updates session
+        session.modified = True #flask will save it
+        flash(f"{quantity} {item_key}(s) added to cart") #message sent to end user upon action
+    return redirect(url_for('index'))
     
-    if drink in cart:
-        cart[drink]['quantity'] += quantity    
     
-    
-    if pizza not in pizzas:
-            flash("invalid Pizza selected")
-            return redirect(url_for('index'))
-    
-    if pizza in cart:
-        cart[pizza]['quantity'] += quantity
-    else:
-        cart[pizza] = {
-        'price': pizzas[pizza]['price'],
-        'quantity': quantity
-        }
-    
-    session['cart'] = cart #updates session
-    session.modified = True #flask will save it
-    flash(f"{quantity} {Pizza}(s) added to cart") #message sent to end user upon action
-    return redirect(url_for('index')) #refreshes homepage
+@app.route('/add_to_cart_pizza', methods=["POST"])
+def add_to_cart_pizza():
+    pizza_info = request.form('pizza_id') #gets the pizza name size and price (in that order)
+    quantity = int(request.form.get('quantity', 1)) # makes the quantity a number
 
+    cart_pizza = session.get('cart_pizza', {}) #creates a cart/dictionary for pizza or adds info to it
 
+    if pizza_info:
+        parts = pizza_info.split('_',2)
+        if len(parts) == 3:
+            name, size, price = parts   
+            item_key =  f"{name} {price})"
 
+            if item_key in cart_pizza:
+                cart_pizza[item_key]['quantity'] += quantity #adds to the quantity of item in cart if there is already the item key there
+            else: #if the item is not there, it will make one there which holds all these variables
+                cart_pizza[item_key] = {'name': name, 
+                                        'size': size, 
+                                        'price': float(price),  #float makes price a decimal instead of string, does math properly
+                                        'quantity': quantity}
 
-
-
-
-
+            session['cart_pizza'] = cart_pizza #updates session
+            session.modified = True #flask will save it
+            flash(f"{quantity} {item_key}(s) added to cart") #message sent to end user upon action
+            return redirect(url_for('index')) #refreshes homepage
 
 
 

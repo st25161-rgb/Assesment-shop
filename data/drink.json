@@ -1,59 +1,59 @@
 [
 {
-    "drink_name": ["Coke"],
+    "drink_name": "Coke",
     "sizes_available":  [
         {
-            "size": ["Small"], "price": ["1.50"]
+            "size": "Small", "price": 1.50
         },
         {
-            "size": ["Large"], "price": ["3.00"]
+            "size": "Large", "price": 3.00
         }
     ]
 },
 
 {
-    "drink_name": ["L&P"],
+    "drink_name": "L&P",
     "sizes_available":  [
         {
-            "size": ["Small"], "price": ["1.50"] 
+            "size": "Small", "price": 1.50 
         },
-        {   "size": ["Large"], "price": ["3.00"]
+        {   "size": "Large", "price": 3.00
         }
     ]
 },
 
 {
-    "drink_name": ["Pepsi"],
+    "drink_name": "Pepsi",
     "sizes_available":  [
         {
-            "size": ["Small"], "price": ["1.50"]
+            "size": "Small", "price": 1.50
         },
         {
-            "size": ["Large"], "price": ["3.00"]
+            "size": "Large", "price": 3.00
         }
     ]
 },
 
 {
-    "drink_name": ["Fanta"],
+    "drink_name": "Fanta",
     "sizes_available":  [
         {
-            "size": ["Small"], "price": ["1.50"]
+            "size": "Small", "price": "1.50"
         },
         {
-            "size": ["Large"], "price": ["3.00"]
+            "size": "Large", "price": "3.00"
         }
     ]
 },
 
 {
-    "drink_name": ["Water"],
+    "drink_name": "Water",
     "sizes_available":  [
         {
-            "size": ["Small"], "price": ["1.00"]
+            "size": "Small", "price": 1.00
         },
         {
-            "size": ["Large"], "price": ["1.50"]
+            "size": "Large", "price": 1.50
         }
     ]
 }
