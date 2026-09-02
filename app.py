@@ -63,7 +63,7 @@ def add_to_cart_drink():
     cart_drink = session.get('cart_drink', {}) #gets the information from the form for drinks
 
     if drink_info:
-        name, size, price = drink_info.split('_')
+        name, size, price = drink_info.split('_', 2)
         item_key = f"{name} ({size})"
 
         if item_key in cart_drink: #if the drink is already in cart, it adds on the quantity in cart
@@ -83,7 +83,7 @@ def add_to_cart_drink():
     
 @app.route('/add_to_cart_pizza', methods=["POST"])
 def add_to_cart_pizza():
-    pizza_info = request.form('pizza_id') #gets the pizza name size and price (in that order)
+    pizza_info = request.form.get('pizza_id') #gets the pizza name size and price (in that order)
     quantity = int(request.form.get('quantity', 1)) # makes the quantity a number
 
     cart_pizza = session.get('cart_pizza', {}) #creates a cart/dictionary for pizza or adds info to it
@@ -92,7 +92,7 @@ def add_to_cart_pizza():
         parts = pizza_info.split('_',2)
         if len(parts) == 3:
             name, size, price = parts   
-            item_key =  f"{name} {price})"
+            item_key =  f"{name} ({price})"
 
             if item_key in cart_pizza:
                 cart_pizza[item_key]['quantity'] += quantity #adds to the quantity of item in cart if there is already the item key there

@@ -29,10 +29,12 @@
                 <!-- pizza option tabs -->
             <div class="tab_select">
                 <!-- django for json files and tab-->
-                {% for p in pizzas %}
+                {% for p, details in pizzas.items() %}
                     <input type="radio" id="tab-{{loop.index}}" name="item_tab" class="tab_radio">
                     
                     <label for="tab-{{loop.index}}" class="tablink"> {{p.pizza_name}}</label>
+                    
+                    <img src="{{ details['picture'] }}" alt="{{ details['picture'] }}"> 
                 {% endfor %}
                 <input type="radio" id="tab-drink" name="item_tab" class="tab_radio">
                 <label for="tab-drink" class="tablink"> Drinks</label>
@@ -88,7 +90,8 @@
                         </div>
 
                         <div class="picture_and_cart">
-                            <img src="{{p.picture}}" id="img">                            
+                            
+                                                       
                         </div>
                     </div>
                 {% endfor %}
@@ -124,25 +127,36 @@
             </div>
         </div>
     </div>  
-    <div class="Cart_content">
+    <br>
+    <div class="cart_content">
             <h2> Your Order:</h2>
             <h3> Pizzas:</h3>
             {% if cart_pizza %}
                 <ul class="cart_list">
                 {% for items, details in cart_pizza.items() %}
-                <li> {{ items }} </li>
+                <li> {{ details['name'] }} {{  details['size']}} - Quantity: {{ details['quantity'] }} x ${{ details['price'] }}: <br>
+                        ${{ details['quantity'] * details['price'] }}</li>
                 {% endfor %}
                 </ul>
+                {% else %}
+                <p> No Pizzas selected</p>
+                
             {% endif %}
             <h3> Drinks: </h3>
-            {% if cart_pizza %}
+            {% if cart_drink %}
                 <ul class="cart_list">
-                {% for items, details in cart_pizza.items() %}
-                <li> {{ items }} </li>
+                {% for items, details in cart_drink.items() %}
+                <li> {{ items }}: {{ details['quantity']}} x {{ details['price']}}:
+                    <br> ${{ details['quantity'] * details['price'] }}
+                </li>
                 {% endfor %}
                 </ul>
+                {% else %}
+                <p> No Drinks selected</p>
             {% endif %}
-        </div>  
+
+
+    </div>  
         
 </main>
 {% endblock %}

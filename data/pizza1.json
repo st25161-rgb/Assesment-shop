@@ -1,0 +1,98 @@
+[
+    {
+        "pizza_name": "Margherita",
+        "pizza_ingredients": [ "Tomato sauce", 
+                                " White mozzarella cheese", 
+                                "Fresh basil" ],
+        "pizza_type": "vegetarian",
+        "description":" The margherita pizza is a classic traditional pizza. Ingredients replicate the colours of the italian flag and was created to honour a visiting queen, Queen Margherita",
+        "picture": "hawaiian_pizza.jpg",
+        "sizes_available": [
+            {"size": "Small", "price": 5.00},
+            {"size": "Medium", "price": 7.50 },
+            {"size": "Large", "price": 10.00}
+        ]
+    },
+    
+    {
+        "pizza_name": "Cheesy Meat Pizza",
+        "pizza_ingredients": ["Tomato sauce", 
+                                "Mozzarella cheese", 
+                                "Fresh basil", 
+                                "Chicken", 
+                                "Oregano"],
+        "pizza_type": "Meat",
+        "description": "This cheesy meat pizza is packed with soft dreamy cheese and delicious meat. made to be a savoury meal If you love cheese this pizza will be your preffered type." ,
+        "picture": "meat_cheese_pizza.jpg",
+        "sizes_available": [
+            {
+                "size":"Small",
+                "price": 7.00
+            },
+            {
+                "size": "Medium",
+                "price": 9.50
+            },
+            {
+                "size": "Large",
+                "price": 12.50
+            }
+        ]
+    },
+
+    {
+        "pizza_name": "Extra Meaty pizza",
+        "pizza_ingredients": ["Tomato sauce", 
+                                "Mozzarella cheese", 
+                                "Fresh basil", 
+                                "Pepperoni", 
+                                "Onion",
+                                "Sausage", 
+                                "Ham"],
+        "pizza_type": "Meat",
+        "description": "This pizza is jam packed with meat for our meat lovers. Take a slice and take your fill. These slices will leave you wanting nothing more, expect maybe a drink to match its intensity.",
+        "picture": "Extra_meaty_pizza.jpg" ,
+        "sizes_available": [
+            {
+                "size": "Small",
+                "price": 8.00
+            },
+            {
+                "size": "Medium",
+                "price": 10.00
+            },
+            {
+                "size": "Large",
+                "price": 13.50
+            }
+        ]
+    },
+
+    {
+        "pizza_name": "Hawaiian Pizza",
+        "pizza_ingredients": ["Tomato sauce", 
+                                "Mozzarella cheese", 
+                                "Pineapple", 
+                                "Ham",
+                                "Jalpeno"],
+
+        "pizza_type": "Meat",
+        "description": "The Hawaiian Pizza is a pizza type made in canada. With a sweet and sour flavour that packs a punch to your tongue, with flavours you wont forget one you take a sweet slice of its delectable dough.",
+        "picture":"Static/Images/hawaiian_pizza.jpg",
+        "sizes_available": [
+            {
+                "size": "Small",
+                "price": 6.00
+            },
+            {
+                "size": "Medium",
+                "price": 8.99
+            },
+            {
+                "size": "Large",
+                "price": 10.99
+            }
+        ]
+    }
+
+]
