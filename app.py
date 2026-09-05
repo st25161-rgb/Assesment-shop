@@ -39,7 +39,47 @@ def index():
     cart_pizza = session.get('cart_pizza', {})
     cart_drink = session.get('cart_drink', {})
 
-    return render_template("index.html", drinks=drinks, pizzas=pizzas, cart_pizza=cart_pizza, cart_drink=cart_drink)
+    return render_template("index.html", 
+                            drinks=drinks, 
+                            pizzas=pizzas, 
+                            cart_pizza=cart_pizza, 
+                            cart_drink=cart_drink,
+                            cancel_order=cancel_order
+                            )
+
+@app.route('/remove_from_cart/<item>')
+def remove_from_cart(item):
+    cart_drink = session.get('cart_drink', {})
+    cart_pizza = session.get('cart_pizza', {})
+    
+    if item in cart_drink:
+        cart_drink.pop(item, None) #pop removes the 'item' in dictionary cart_drink
+        session['cart_drink'] = cart_drink
+        session.modified = True #updates session
+        flash(f"all {{items}}('s) have been taken out of your cart.")
+        
+    
+    elif item in cart_pizza:
+        cart_pizza.pop(item, None) #pop removes the 'item' in dictionary cart_drink
+        session['cart_pizza'] = cart_pizza
+        session.modified = True #updates session
+        flash(f"all {{items}}('s) have been taken out of your cart.")
+    
+    else:
+        flash(f"The {{item}}('s) could not be found in your cart.")
+
+         
+    return redirect(url_for('index'))
+
+@app.route('/cancel_order', methods=['POST'])
+def cancel_order():
+    session.pop('cart_pizza', None)
+    session.pop('cart_drink', None)
+    session.modified = True
+    flash(f"Cart has been emptied")
+
+    return redirect(url_for('index'))
+
 
 @app.route('/about')
 def about():

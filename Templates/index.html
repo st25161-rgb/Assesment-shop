@@ -29,12 +29,10 @@
                 <!-- pizza option tabs -->
             <div class="tab_select">
                 <!-- django for json files and tab-->
-                {% for p, details in pizzas.items() %}
+                {% for p in pizzas %}
                     <input type="radio" id="tab-{{loop.index}}" name="item_tab" class="tab_radio">
                     
                     <label for="tab-{{loop.index}}" class="tablink"> {{p.pizza_name}}</label>
-                    
-                    <img src="{{ details['picture'] }}" alt="{{ details['picture'] }}"> 
                 {% endfor %}
                 <input type="radio" id="tab-drink" name="item_tab" class="tab_radio">
                 <label for="tab-drink" class="tablink"> Drinks</label>
@@ -91,6 +89,7 @@
 
                         <div class="picture_and_cart">
                             
+                            <img src="{{p.picture}}" alt="{{p.picture}} image" id="img">
                                                        
                         </div>
                     </div>
@@ -136,6 +135,9 @@
                 {% for items, details in cart_pizza.items() %}
                 <li> {{ details['name'] }} {{  details['size']}} - Quantity: {{ details['quantity'] }} x ${{ details['price'] }}: <br>
                         ${{ details['quantity'] * details['price'] }}</li>
+                    {% for item in session.get('cart_pizza',{} )%}
+                        <a href="{{ url_for('remove_from_cart', item=item) }}"> [Remove]</a>
+                    {% endfor %}
                 {% endfor %}
                 </ul>
                 {% else %}
@@ -148,6 +150,10 @@
                 {% for items, details in cart_drink.items() %}
                 <li> {{ items }}: {{ details['quantity']}} x {{ details['price']}}:
                     <br> ${{ details['quantity'] * details['price'] }}
+                    {% for item in session.get('cart_drink',{} )%}
+                        <a href="{{ url_for('remove_from_cart', item=item) }}"> [Remove]</a>
+                    {% endfor %}
+
                 </li>
                 {% endfor %}
                 </ul>
@@ -155,6 +161,15 @@
                 <p> No Drinks selected</p>
             {% endif %}
 
+            <h3> Total:</h3>
+
+            <form method="POST">
+                <label for="customer_name_checkout"required>Your Name:</label>
+                <input type="text" name="customer_name" id="customer_name_checkout" required>
+                <br>
+                <button type="submit"  id="submit">Checkout</button>
+                <button type="submit"  id="submit" formaction="{{ url_for('cancel_order') }}" onclick="return confirm('Are you sure you want to cancel your order?');">Cancel Order</button>
+            </form>
 
     </div>  
         

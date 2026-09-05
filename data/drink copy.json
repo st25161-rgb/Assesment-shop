@@ -1,0 +1,60 @@
+{
+"Coke": {
+    "drink_name": "Coke",
+    "sizes_available":  [
+        {
+            "size": "Small", "price": 1.50
+        },
+        {
+            "size": "Large", "price": 3.00
+        }
+    ]
+},
+
+"L&P": {
+    "drink_name": "L&P",
+    "sizes_available":  [
+        {
+            "size": "Small", "price": 1.50 
+        },
+        {   "size": "Large", "price": 3.00
+        }
+    ]
+},
+
+"Pepsi":{
+    "drink_name": "Pepsi",
+    "sizes_available":  [
+        {
+            "size": "Small", "price": 1.50
+        },
+        {
+            "size": "Large", "price": 3.00
+        }
+    ]
+},
+
+"Fanta":{
+    "drink_name": "Fanta",
+    "sizes_available":  [
+        {
+            "size": "Small", "price": "1.50"
+        },
+        {
+            "size": "Large", "price": "3.00"
+        }
+    ]
+},
+
+"Water":{
+    "drink_name": "Water",
+    "sizes_available":  [
+        {
+            "size": "Small", "price": 1.00
+        },
+        {
+            "size": "Large", "price": 1.50
+        }
+    ]
+}
+}
