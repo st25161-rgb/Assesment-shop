@@ -46,6 +46,55 @@ def index():
                             cart_drink=cart_drink,
                             cancel_order=cancel_order
                             )
+@app.route('/order')
+def order():
+    drinks = load_drink_data()
+    pizzas = load_pizza_data()
+    cart_pizza = session.get('cart_pizza', {})
+    cart_drink = session.get('cart_drink', {})
+
+    return render_template("order.html",
+                            drinks=drinks, 
+                            pizzas=pizzas, 
+                            cart_pizza=cart_pizza, 
+                            cart_drink=cart_drink,
+                            cancel_order=cancel_order
+                            )
+
+@app.route('/orders')
+def order_display():
+    with sqlite3.connect('flower_shop.db') as conn:
+        cursor = conn.cursor()
+        cursor.execute('SELECT * FROM orders ORDER BY date DESC')
+        rows = cursor.fetchall()
+        orders = []
+        for row in rows:
+            orders.append({
+                'order_id': row[0],
+                'invoice_number': row[1],
+                'customer_name': row[2],
+                'pizza': json.loads(row[3]),
+                'drinks': json.loads(row[4]),
+                'total': row[5],
+                'date': row[7]
+            })
+
+        return render_template("order_display.html", orders=orders) 
+
+@app.route('/checkout', methods=['POST'])
+def checkout():
+    customer_name = request.form['customer_name'].strip().title() #Makes sure the name is 'valid'
+
+    if not customer_name:   #if the name isnt valid, tells user to enter a name and redierects back to order page
+        flash("Customer name is required")
+        return redirect(url_for("order"))
+    
+    cart_pizza = session.get('cart_pizza', {}) #takes items from the cart for pizza and tells route what they are
+    cart_drink = cart + session.get("cart_drinks", {}) #takes items from cart for dirnka and tells route what they are
+
+    if not cart_pizza: #prevents empty cart errors
+        flash("your cart is empty")
+        return redirect(url_for('order'))
 
 @app.route('/remove_from_cart/<item>')
 def remove_from_cart(item):
@@ -69,7 +118,7 @@ def remove_from_cart(item):
         flash(f"The {{item}}('s) could not be found in your cart.")
 
          
-    return redirect(url_for('index'))
+    return redirect(url_for('order.html'))
 
 @app.route('/cancel_order', methods=['POST'])
 def cancel_order():
@@ -78,18 +127,14 @@ def cancel_order():
     session.modified = True
     flash(f"Cart has been emptied")
 
-    return redirect(url_for('index'))
+    return redirect(url_for('order.html'))
 
 
 @app.route('/about')
 def about():
     return render_template("about.html")
 
-@app.route('/order')
-def order():
-    drinks = load_drink_data()
-    pizzas = load_pizza_data()
-    return render_template("order.html", drinks=drinks, pizzas=pizzas)
+
 
 @app.route('/invoice')
 def invoice():
@@ -118,7 +163,7 @@ def add_to_cart_drink():
         session['cart_drink'] = cart_drink #updates session
         session.modified = True #flask will save it
         flash(f"{quantity} {item_key}(s) added to cart") #message sent to end user upon action
-    return redirect(url_for('index'))
+    return redirect(url_for('order'))
     
     
 @app.route('/add_to_cart_pizza', methods=["POST"])
@@ -145,7 +190,7 @@ def add_to_cart_pizza():
             session['cart_pizza'] = cart_pizza #updates session
             session.modified = True #flask will save it
             flash(f"{quantity} {item_key}(s) added to cart") #message sent to end user upon action
-            return redirect(url_for('index')) #refreshes homepage
+            return redirect(url_for('order')) #refreshes homepage
 
 
 

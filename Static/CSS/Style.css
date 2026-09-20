@@ -226,7 +226,40 @@ p {
     font-weight: 400;
     font-style: normal;
 }
+
+/* About page details */
+
 .information {
     display: grid;
     grid-template-columns: 1fr, 1fr, 1fr;
+    margin-left: 140px;
+    font-size: 30px;
+    border: solid rgb(109, 38, 38) 5px;
+    padding: 20px;
+}
+
+.information div {
+    display: flex;
+}
+
+.introduction {
+    display: grid;
+    grid-template-columns: 1fr, 1fr, 1fr;
+    margin-left: 140px;
+    font-size: 30px;
+}
+
+
+#enlargen1 {
+    font-size: 50px;
+    text-decoration: underline black 5px;
+}
+
+#detail {
+    text-decoration: underline black 2px;
+
+}
+#enlargen {
+    font-size: 40px;
+    text-decoration: none;
 }
