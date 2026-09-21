@@ -44,7 +44,9 @@ def index():
                             pizzas=pizzas, 
                             cart_pizza=cart_pizza, 
                             cart_drink=cart_drink,
-                            cancel_order=cancel_order
+                            total = total,
+                            cancel_order=cancel_order,
+                            checkout = checkout
                             )
 @app.route('/order')
 def order():
@@ -52,11 +54,16 @@ def order():
     pizzas = load_pizza_data()
     cart_pizza = session.get('cart_pizza', {})
     cart_drink = session.get('cart_drink', {})
+    total = calculate_total(cart_pizza, cart_drink)
+
+    cancel_order = session.get('cancel_order', False)
+    checkout = session.get('checkout', False)
 
     return render_template("order.html",
                             drinks=drinks, 
                             pizzas=pizzas, 
                             cart_pizza=cart_pizza, 
+                            total = total,
                             cart_drink=cart_drink,
                             cancel_order=cancel_order
                             )
@@ -90,11 +97,59 @@ def checkout():
         return redirect(url_for("order"))
     
     cart_pizza = session.get('cart_pizza', {}) #takes items from the cart for pizza and tells route what they are
-    cart_drink = cart + session.get("cart_drinks", {}) #takes items from cart for dirnka and tells route what they are
+    cart_drink = session.get("cart_drinks", {}) #takes items from cart for dirnka and tells route what they are
 
     if not cart_pizza: #prevents empty cart errors
         flash("your cart is empty")
         return redirect(url_for('order'))
+
+    total = calculate_total(cart_pizza, cart_drink)
+
+    invoice_date = datetime.datetime.now().strftime('%Y-%M-%d %H-%M-%S') #invoice date
+    invoice_number = f"INV_{customer_name.replace('  ', '_')}_{invoice_date}"
+
+    with sqlite3.connect('order.db') as conn:
+        cursor = conn.cursor()
+        cursor_execute('''
+            INSERT INTO orders (invoice_number, customer_name, pizza, drinks, total)
+            VALUES (?, ?, ?, ?, ?)
+        ''', (invoice_number, customer_name, json.dumps(cart_pizza), json.dumps(cart_drink), total))
+        conn.commit()
+    
+    invoice_filename = f"{invoice_number}.txt" #makes the invoice number into a string
+
+    try:    #opens invoice as a file
+        with open(invoice_filename, 'w') as f:
+            f.write(f"Invoice Number : {invoice_number}\n")
+            f.write(f"Customer Name: {customer_name}\n")
+            f.write(f"Invoice date: {invoice_date}\n")
+            f.write(f"\nPizzas:\n")
+            for pizza, details in cart_pizza.item():
+                f.write(f" {item}: {details['quantity']} x ${details['price']:.2f} = ${details['quantity'] * details['price']:.2f}\n  ") 
+            f.write(f"\nDrinks:\n")           
+            for drinks, details in cart_drink.item():
+                f.write(f" {item}: {details['quantity']} x ${details['price']:.2f} = ${details['quantity'] * details['price']:.2f}\n ") 
+            
+            f.write(f"\nTotal: ${total:.2f}\n")
+    except Exception as e:
+        flash(f"Error whilst saving invoice: {e}") #prevents crash if the invoice fails
+    
+    session.pop('cart_pizza', None)
+    session.pop('cart_drink', None)
+    session.modified = True
+    flash(f"Your cart has been emptied, The order is now being made")
+    
+    return render_template('invoice.html',
+                            cart_drink = cart_drink,
+                            cart_pizza = cart_pizza,
+                            total = total,
+                            customer_name = customer_name,
+                            invoice_date = invoice_date
+                            )
+
+def calculate_total(cart_pizza, cart_drink):
+    total = sum(item['price'] * item['quantity'] for item in cart_pizza.values())
+    total += sum(item['price'] * item[quantity] for item in cart_drink.values())
 
 @app.route('/remove_from_cart/<item>')
 def remove_from_cart(item):
@@ -192,6 +247,15 @@ def add_to_cart_pizza():
             flash(f"{quantity} {item_key}(s) added to cart") #message sent to end user upon action
             return redirect(url_for('order')) #refreshes homepage
 
+@app.route('/cancel_saved_order/<int:order_id>', methods=['POST'])
+def cancel_saved_order(order_id):
+    with sqlite3.connect('flower_shop.db') as conn:
+        cursor = conn.cursor()
+        cursor.execute('DELETE FROM orders WHERE order_id = ?', (order_id,))
+        conn.commit()
+    
+    flash(f"Order {order_id} has been cancelled.")
+    return redirect(url_for('order_history'))
 
 
 if __name__ == '__main__':
