@@ -29,7 +29,7 @@ def load_pizza_data():
 
 def calculate_total(cart_pizza, cart_drink):
     total = sum(item['price'] * item['quantity'] for item in cart_pizza.values())
-    total += sum(item['price'] * item[quantity] for item in cart_drink.values())
+    total += sum(item['price'] * item['quantity'] for item in cart_drink.values())
     
     return total
 
@@ -37,7 +37,7 @@ def initialise_database():
     with sqlite3.connect('order.db') as conn:
         cursor = conn.cursor()
         cursor.execute('''
-        CREATE TABLE IF NOT EXIST orders (
+        CREATE TABLE IF NOT EXISTS orders (
             order_id INTEGER PRIMARY KEY AUTOINCREMENT,
             invoice_number TEXT,
             customer_name TEXT,
@@ -47,6 +47,7 @@ def initialise_database():
             date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             );
         ''')
+        conn.commit()
 
 
 # the routes for the template files or fucntions to
@@ -66,7 +67,6 @@ def index():
                             pizzas=pizzas, 
                             cart_pizza=cart_pizza, 
                             cart_drink=cart_drink,
-                            total = total,
                             cancel_order=cancel_order,
                             checkout = checkout
                             )
@@ -100,7 +100,7 @@ def about():
 def invoice():
     return render_template("invoice.html")
 
-@app.route('/order')
+@app.route('/order_display')
 def order_display():
     with sqlite3.connect('order.db') as conn:
         cursor = conn.cursor()
@@ -115,10 +115,13 @@ def order_display():
                 'pizza': json.loads(row[3]),
                 'drinks': json.loads(row[4]),
                 'total': row[5],
-                'date': row[7]
+                'date': row[6]
             })
 
         return render_template("order_display.html", orders=orders) 
+
+
+
 
 @app.route('/checkout', methods=['POST'])
 def checkout():
@@ -129,16 +132,18 @@ def checkout():
         return redirect(url_for("order"))
     
     cart_pizza = session.get('cart_pizza', {}) #takes items from the cart for pizza and tells route what they are
-    cart_drink = session.get("cart_drinks", {}) #takes items from cart for dirnka and tells route what they are
+    cart_drink = session.get("cart_drink", {}) #takes items from cart for dirnka and tells route what they are
 
-    if not cart_pizza or cart_drink: #prevents empty cart errors
+    if not cart_pizza and not cart_drink: #prevents empty cart errors
         flash("your cart is empty")
         return redirect(url_for('order'))
 
     total = calculate_total(cart_pizza, cart_drink)
 
-    invoice_date = datetime.datetime.now().strftime('%Y-%M-%d %H-%M-%S') #invoice date
-    invoice_number = f"INV_{customer_name.replace('  ', '_')}_{invoice_date}"
+    invoice_date = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S') #date of invoice
+    customer_name = customer_name.replace('  ','_')
+
+    invoice_number = f"INV_{customer_name}{invoice_date}"
 
     with sqlite3.connect('order.db') as conn:
         cursor = conn.cursor()
@@ -156,13 +161,21 @@ def checkout():
             f.write(f"Customer Name: {customer_name}\n")
             f.write(f"Invoice date: {invoice_date}\n")
             f.write(f"\nPizzas:\n")
-            for pizza, details in cart_pizza.item():
-                f.write(f" {item}: {details['quantity']} x ${details['price']:.2f} = ${details['quantity'] * details['price']:.2f}\n  ") 
-            f.write(f"\nDrinks:\n")           
-            for drinks, details in cart_drink.item():
-                f.write(f" {item}: {details['quantity']} x ${details['price']:.2f} = ${details['quantity'] * details['price']:.2f}\n ") 
-            
-            f.write(f"\nTotal: ${total:.2f}\n")
+
+        for pizza, details in cart_pizza.items():
+            subtotal = details['price'] * details['quantity']
+            f.write(
+                f"{pizza}: {details['quantity'] * details['price']:.2f} ="
+                f" ${subtotal:.2f}/n"  )
+
+        f.write(f"\nDrinks:\n")           
+        for drinks, details in cart_drink.items():
+            subtotal = details['price'] * details['quantity']
+            f.write(
+                f" {pizza}: {details['quantity']} x ${details['price']:.2f} = $"
+                f"{subtotal:.2f}/n"     ) 
+        
+        f.write(f"\nTotal: ${total:.2f}\n")
     except Exception as e:
         flash(f"Error whilst saving invoice: {e}") #prevents crash if the invoice fails
     
@@ -171,7 +184,7 @@ def checkout():
     session.modified = True
     flash(f"Your cart has been emptied, The order is now being made")
     
-    return redirect (url_for('invoice'),
+    return render_template("invoice.html",
                             cart_drink = cart_drink,
                             cart_pizza = cart_pizza,
                             total = total,
@@ -190,20 +203,16 @@ def remove_from_cart(item):
         cart_drink.pop(item, None) #pop removes the 'item' in dictionary cart_drink
         session['cart_drink'] = cart_drink
         session.modified = True #updates session
-        flash(f"all {{items}}('s) have been taken out of your cart.")
-        
-    
+        flash(f"all {{item}}('s) have been taken out of your cart.")            
     elif item in cart_pizza:
         cart_pizza.pop(item, None) #pop removes the 'item' in dictionary cart_drink
         session['cart_pizza'] = cart_pizza
         session.modified = True #updates session
-        flash(f"all {{items}}('s) have been taken out of your cart.")
+        flash(f"all {{item}}('s) have been taken out of your cart.")
     
     else:
-        flash(f"The {{item}}('s) could not be found in your cart.")
-
-         
-    return redirect(url_for('order.html'))
+        flash(f"The {{item}}('s) could not be found in your cart.")         
+    return redirect(url_for('order'))
 
 @app.route('/cancel_order', methods=['POST'])
 def cancel_order():
@@ -212,7 +221,13 @@ def cancel_order():
     session.modified = True
     flash(f"Cart has been emptied")
 
-    return redirect(url_for('order.html'))
+    return render_template("invoice.html",
+                            cart_drink = cart_drink,
+                            cart_pizza = cart_pizza,
+                            total = total,
+                            customer_name = customer_name,
+                            invoice_date = invoice_date ) 
+
 
 @app.route('/add_to_cart_drinks', methods=["POST"])
 def add_to_cart_drink():
@@ -278,5 +293,5 @@ def cancel_saved_order(order_id):
 
 
 if __name__ == '__main__':
-    # initialise_database()
+    initialise_database()
     app.run(debug=True)

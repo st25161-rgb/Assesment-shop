@@ -1,0 +1,5 @@
+Invoice Number : INV_K_2026-07-06 17-07-02
+Customer Name: K
+Invoice date: 2026-07-06 17-07-02
+
+Pizzas:

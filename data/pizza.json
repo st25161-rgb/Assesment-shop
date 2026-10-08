@@ -80,7 +80,7 @@
 
         "pizza_type": "Meat",
         "description": "The Hawaiian Pizza is a pizza type made in canada. With a sweet and sour flavour that packs a punch to your tongue, with flavours you wont forget one you take a sweet slice of its delectable dough.",
-        "picture":"Static/Images/hawaiian_pizza.jpg",
+        "picture":"static/Images/hawaiian_pizza.jpg",
         "sizes_available": [
             {
                 "size": "Small",

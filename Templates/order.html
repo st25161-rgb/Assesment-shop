@@ -119,16 +119,18 @@
                 <ul class="cart_list">
                 {% for items, details in cart_pizza.items() %}
                 <li> {{ details['name'] }} {{  details['size']}} - Quantity: {{ details['quantity'] }} x ${{ details['price'] }}: <br>
-                        ${{ details['quantity'] * details['price'] }}</li>
-                    {% for item in session.get('cart_pizza',{} )%}
-                        <a href="{{ url_for('remove_from_cart', item=item) }}"> [Remove]</a>
-                    {% endfor %}
+                        ${{ details['quantity'] * details['price'] }}
+                        <a href="{{ url_for('remove_from_cart', item=items) }}"> [Remove]</a>
+                </li>
+                    
                 {% endfor %}
                 </ul>
                 {% else %}
                 <p> No Pizzas selected</p>
-                
             {% endif %}
+            
+            <br>
+
             <h3> Drinks: </h3>
             {% if cart_drink %}
                 <ul class="cart_list">
@@ -136,7 +138,7 @@
                 <li> {{ items }}: {{ details['quantity']}} x {{ details['price']}}:
                     <br> ${{ details['quantity'] * details['price'] }}
                     {% for item in session.get('cart_drink',{} )%}
-                        <a href="{{ url_for('remove_from_cart', item=item) }}"> [Remove]</a>
+                        <a href="{{ url_for('remove_from_cart', item=items) }}"> [Remove]</a>
                     {% endfor %}
 
                 </li>
