@@ -14,9 +14,10 @@
             <h1 id="mainhead" >Order History</h1>
         </header>
         {% if orders %}
-            <table>
-                <thead>
-                    <tr>
+            <table> <!--creates a table yeah, for easy reading of order details-->
+                
+                <thead> <!--table head, where context for what the cells in its column contain-->
+                    <tr> <!--tr is table row-->
                         <th>Invoice Number</th>
                         <th>Customer Name</th>
                         <th>Pizzas</th>
@@ -26,17 +27,54 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for orders in orders %}
+                    {% for order in orders %}
                         <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <form action="{{ url_for('cancel_saved_order', order_id=order.order_id) }}" method="post">
-                                <button type="submit" id="submit" onclick="return confirm('Are you sure you want to cancel this order?');">Cancel Order</button>
-                            </form>
-                        </td>
+                            <td>{{order.invoice_number}}</td>
+                            <td>{{order.customer_name}}</td>
+                            
+                            <td> <!-- because of how the json file is made, i have to do a more broken down dictionary -->
+                                {% if order.pizza %}
+                                <ul>
+                                    {% for item in order.pizza.values() %}
+<!-- since the data breaks into something like 	
+ {'Cheesy Meat Pizza (7.0)': {'name': 'Cheesy Meat Pizza', 'price': 7.0, 'quantity': 1, 'size': 'Small'}} 
+ I break it down more using the .values() so i can display each one
+ doing this cuz my JSON file is a bit wonky with how I did it -->
+                                    <li>
+                                        
+                                        <strong>{{item.drink_name}}</strong> {{item.size}} 
+                                        <br> 
+                                        Quantity: {{item.quantity}} | Price: ${{"%.2f"|format(item.price)}} <!-- format makes it so the price becomes a price price uk-->
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                                {%else%}
+                                    NONE
+                                {%endif%}
+                            </td>
+                             
+                            <td>
+                                {% if order.drinks %}
+                                <ul>
+                                    {% for item in order.drinks.values() %}
+                                    <li>
+                                        
+                                        <strong>{{item.name}}</strong> {{item.size}} 
+                                        <br> 
+                                        Quantity: {{item.quantity}} | Price: ${{"%.2f"|format(item.price)}} <!-- format makes it so the price becomes a price price uk-->
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                            {%else%}
+                                NONE
+                            {%endif%}
+                            </td>
+                            
+                            <td>
+                                <form action="{{ url_for('cancel_saved_order', order_id=order.order_id) }}" method="post">
+                                    <button type="submit" id="submit" onclick="return confirm('Are you sure you want to cancel this order?');">Cancel Order</button>
+                                </form>
+                            </td>
                         </tr>
                     {% endfor %}
                 </tbody>

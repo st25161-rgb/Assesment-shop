@@ -1,5 +1,0 @@
-Invoice Number : INV_L_2026-43-06 17-43-44
-Customer Name: L
-Invoice date: 2026-43-06 17-43-44
-
-Pizzas:

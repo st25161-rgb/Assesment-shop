@@ -13,7 +13,7 @@ def load_drink_data():
             drinks = json.load(file)
     except (FileNotFoundError, json.JSONDecodeError) as e:
         print(f"Error loading drink data: {e}")
-        drinks = {}
+        drinks = []
     
     return drinks
 
@@ -103,19 +103,20 @@ def invoice():
 @app.route('/order_display')
 def order_display():
     with sqlite3.connect('order.db') as conn:
+        conn.row_factory = sqlite3.Row
         cursor = conn.cursor()
         cursor.execute('SELECT * FROM orders ORDER BY date DESC')
         rows = cursor.fetchall()
         orders = []
         for row in rows:
             orders.append({
-                'order_id': row[0],
-                'invoice_number': row[1],
-                'customer_name': row[2],
-                'pizza': json.loads(row[3]),
-                'drinks': json.loads(row[4]),
-                'total': row[5],
-                'date': row[6]
+                'order_id': row['order_id'],
+                'invoice_number': row['invoice_number'],
+                'customer_name': row['customer_name'],
+                'pizza': json.loads(row['pizza'] or '{}'), # or '{}' prevents crashing
+                'drinks': json.loads(row['drinks'] or '{}' ), # or '{}' prevents crashing if the json is empty
+                'total': row['total'],
+                'date': row['date']
             })
 
         return render_template("order_display.html", orders=orders) 
@@ -140,7 +141,7 @@ def checkout():
 
     total = calculate_total(cart_pizza, cart_drink)
 
-    invoice_date = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S') #date of invoice
+    invoice_date = datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S') #date of invoice
     customer_name = customer_name.replace('  ','_')
 
     invoice_number = f"INV_{customer_name}{invoice_date}"
@@ -165,15 +166,13 @@ def checkout():
         for pizza, details in cart_pizza.items():
             subtotal = details['price'] * details['quantity']
             f.write(
-                f"{pizza}: {details['quantity'] * details['price']:.2f} ="
-                f" ${subtotal:.2f}/n"  )
+                f"{pizza}: {details['quantity'] * details['price']:.2f} = ${subtotal:.2f}\n"  )
 
         f.write(f"\nDrinks:\n")           
         for drinks, details in cart_drink.items():
             subtotal = details['price'] * details['quantity']
             f.write(
-                f" {pizza}: {details['quantity']} x ${details['price']:.2f} = $"
-                f"{subtotal:.2f}/n"     ) 
+                f" {drinks}: {details['quantity']} * ${details['price']:.2f} = $ {subtotal:.2f}\n"     ) 
         
         f.write(f"\nTotal: ${total:.2f}\n")
     except Exception as e:
@@ -189,7 +188,8 @@ def checkout():
                             cart_pizza = cart_pizza,
                             total = total,
                             customer_name = customer_name,
-                            invoice_date = invoice_date
+                            invoice_date = invoice_date,
+                            invoice_number = invoice_number
                             )
 
 
@@ -203,15 +203,15 @@ def remove_from_cart(item):
         cart_drink.pop(item, None) #pop removes the 'item' in dictionary cart_drink
         session['cart_drink'] = cart_drink
         session.modified = True #updates session
-        flash(f"all {{item}}('s) have been taken out of your cart.")            
+        flash(f"all {item}('s) have been taken out of your cart.")            
     elif item in cart_pizza:
         cart_pizza.pop(item, None) #pop removes the 'item' in dictionary cart_drink
         session['cart_pizza'] = cart_pizza
         session.modified = True #updates session
-        flash(f"all {{item}}('s) have been taken out of your cart.")
+        flash(f"all {item}('s) have been taken out of your cart.")
     
     else:
-        flash(f"The {{item}}('s) could not be found in your cart.")         
+        flash(f"The {item}('s) could not be found in your cart.")         
     return redirect(url_for('order'))
 
 @app.route('/cancel_order', methods=['POST'])
@@ -244,6 +244,8 @@ def add_to_cart_drink():
             cart_drink[item_key]['quantity'] += quantity
         else: #if drink is not in cart, then it will add it into the cart dictionary and make the price a number not string
             cart_drink[item_key] = {
+                'name': name,
+                'size': size,
                 'price': float(price),
                 'quantity': quantity   
             }
@@ -283,13 +285,13 @@ def add_to_cart_pizza():
 
 @app.route('/cancel_saved_order/<int:order_id>', methods=['POST'])
 def cancel_saved_order(order_id):
-    with sqlite3.connect('flower_shop.db') as conn:
+    with sqlite3.connect('order.db') as conn:
         cursor = conn.cursor()
         cursor.execute('DELETE FROM orders WHERE order_id = ?', (order_id,))
         conn.commit()
     
     flash(f"Order {order_id} has been cancelled.")
-    return redirect(url_for('order_history'))
+    return redirect(url_for('order_display'))
 
 
 if __name__ == '__main__':
