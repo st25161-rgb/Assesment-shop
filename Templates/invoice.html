@@ -2,6 +2,26 @@
 
 {% block title %} Home - Dream Pizzas {% endblock %}
 
+
+
 {% block content %}
+<head>
+    <title> Invoice</title>
+</head>
+<header>
+    <h1> Your Invoice</h1>
+</header>
+
+<h2> Invoice:</h2>
+{% for order in orders %}
+<h3> Invoice Number: {% order.invoice_number %} </h3>
+<h3> Name: {{order.customer_name}} </h3> 
+<h3> Pizzas:</h3>
+<ul>
+    {%%}
+    <li> {{order}} </li>
+</ul>
+
+
 
 {% endblock %}

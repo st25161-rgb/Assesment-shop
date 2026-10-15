@@ -55,14 +55,14 @@ def initialise_database():
 def base():
     return render_template("base.html")
 
-@app.route('/')
-def index():
+@app.route("/modal")
+def modal():
     drinks = load_drink_data()
     pizzas = load_pizza_data()
     cart_pizza = session.get('cart_pizza', {})
     cart_drink = session.get('cart_drink', {})
 
-    return render_template("index.html", 
+    return render_template("modal.html",
                             drinks=drinks, 
                             pizzas=pizzas, 
                             cart_pizza=cart_pizza, 
@@ -70,6 +70,27 @@ def index():
                             cancel_order=cancel_order,
                             checkout = checkout
                             )
+
+@app.route('/')
+def index():
+    drinks = load_drink_data()
+    pizzas = load_pizza_data()
+    cart_pizza = session.get('cart_pizza', {})
+    cart_drink = session.get('cart_drink', {})
+    total = calculate_total(cart_pizza, cart_drink)
+
+    cancel_order = session.get('cancel_order', False)
+    checkout = session.get('checkout', False)
+
+    return render_template("index.html", 
+                            drinks=drinks, 
+                            pizzas=pizzas, 
+                            cart_pizza=cart_pizza, 
+                            total = total,
+                            cart_drink=cart_drink,
+                            cancel_order=cancel_order
+                            )
+                            
 @app.route('/order')
 def order():
     drinks = load_drink_data()

@@ -1,5 +1,0 @@
-Invoice Number : INV_K2026-10-12_11-13-54
-Customer Name: K
-Invoice date: 2026-10-12_11-13-54
-
-Pizzas:

@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+
+{% block title %} Order - Dream Pizzas {% endblock %}
+{% block content %}
+<!-- Tells what this page is -->
+<main>
+
+     <div  id="menu">
+        <div  class="pizzaform">
+            <h2 id="subtitle"> Select your menu item </h2>
+
+            {% for p in pizzas %}
+            <button onclick="show('{{loop.index}}')" > {{p.pizza_name}} </button>
+
+            <dialog id="dialog-{{loop.index}}">
+                        <div class="ingredients">
+                            <p id="list_title"> Ingredients: </p>
+                            <ul id="list_text">
+                                {% for ingredients in p.pizza_ingredients  %} 
+                                    <li> {{ ingredients }} </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+
+                        <div class="description">
+                            <!-- pizza description and information -->
+
+                            <p id="pizzatype_text">Type: {{ p.pizza_type }}</p>
+                            <p id="description"> {{ p.description }}</p>
+
+                            <!-- choosing pizza -->
+
+                            <div class="size_info">
+                                <form action="{{ url_for('add_to_cart_pizza') }}" method="POST">
+                                    <fieldset>
+                                        <legend> Select Pizza Size </legend>
+
+                                        <label for="pizza_select-{{loop._index}}"> Pizza Options: </label>
+                                        <!-- drink_id is what app.py will use as the source for select options data -->
+                                        <select name="pizza_id" id="pizza_select_{{loop.index}}" required>     
+                                            {% for s in p.sizes_available %}
+                                                <option value="{{p.pizza_name}}_{{ s.size }}_{{ s.price }}" id="pizza_selectshow">
+                                                    {{ s.size }} - ${{ s.price }}
+                                                </option>
+                                            {% endfor %}
+                                        </select>
+
+                                        <label for="quantity"> Quantity:</label>
+                                        <input type="number" id="quantity_pizza_{{loop.index}}" name="quantity" value=1 max="3" min="1" required>
+
+                                        <button type="submit" id="submit_button"> Add to cart</button>
+                                        
+                                    </fieldset>
+                                </form>
+                            </div>
+
+                        </div>
+            </dialog>
+
+            <script>
+                
+                // subsituted the {{loop.index}} since it wasn't allowing it to work there with id. "id" will match {{loop.index}}
+                // Test fail needed this fix. giving it {{loop.index}} a ('') made it so the '' part can be replaced
+                function  show(id) {
+                    const dialog = document.getElementById("dialog-" + id); // puts the dialog- and id together into dialog-id whilst replacing id with the expected number
+                    if (dialog) {
+                        dialog.showModal();
+                    }
+                }
+                
+
+            </script>
+            
+            {% endfor %}
+
+
+                
+    <br>
+    <div class="cart_content">
+            <h2> Your Order:</h2>
+            <h3> Pizzas:</h3>
+            {% if cart_pizza %}
+                <ul class="cart_list">
+                {% for items, details in cart_pizza.items() %}
+                <li> {{ details['name'] }} {{  details['size']}} - Quantity: {{ details['quantity'] }} x ${{ details['price'] }}: <br>
+                        ${{ details['quantity'] * details['price'] }}
+                        <a href="{{ url_for('remove_from_cart', item=items) }}"> [Remove]</a>
+                </li>
+                    
+                {% endfor %}
+                </ul>
+                {% else %}
+                <p> No Pizzas selected</p>
+            {% endif %}
+            
+            <br>
+
+            <h3> Drinks: </h3>
+            {% if cart_drink %}
+                <ul class="cart_list">
+                {% for items, details in cart_drink.items() %}
+                <li> {{ items }}: {{ details['quantity']}} x {{ details['price']}}:
+                    <br> ${{ details['quantity'] * details['price'] }}
+                    {% for item in session.get('cart_drink',{} )%}
+                        <a href="{{ url_for('remove_from_cart', item=items) }}"> [Remove]</a>
+                    {% endfor %}
+
+                </li>
+                {% endfor %}
+                </ul>
+                {% else %}
+                <p> No Drinks selected</p>
+            {% endif %}
+
+            <h3> Total:  {{ total }} $ </h3>
+
+            <form method="POST">
+                <label for="customer_name_checkout"required>Your Name:</label>
+                <input type="text" name="customer_name" id="customer_name_checkout" required>
+                <br>
+                <button type="submit" formaction="{{ url_for('checkout') }}" id="submit">Checkout</button>
+                <button type="submit"  id="submit" formaction="{{ url_for('cancel_order') }}" onclick="return confirm('Are you sure you want to cancel your order?');">Cancel Order</button>
+            </form>
+
+    </div> 
+</main> 
+{% endblock %}

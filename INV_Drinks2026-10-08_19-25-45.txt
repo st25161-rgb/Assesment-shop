@@ -1,5 +1,0 @@
-Invoice Number : INV_Drinks2026-10-08_19-25-45
-Customer Name: Drinks
-Invoice date: 2026-10-08_19-25-45
-
-Pizzas:

@@ -51,7 +51,7 @@
                                     <fieldset>
                                         <legend> Select Pizza Size </legend>
 
-                                        <label for="pizza_select-{{loop._ndex}}"> Pizza Options: </label>
+                                        <label for="pizza_select-{{loop._index}}"> Pizza Options: </label>
                                         <!-- drink_id is what app.py will use as the source for select options data -->
                                         <select name="pizza_id" id="pizza_select_{{loop.index}}" required>     
                                             {% for s in p.sizes_available %}

@@ -1,5 +1,0 @@
-Invoice Number : INV_Rahman Issac2026-10-12_12-10-00
-Customer Name: Rahman Issac
-Invoice date: 2026-10-12_12-10-00
-
-Pizzas:

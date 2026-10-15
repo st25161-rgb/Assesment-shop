@@ -1,5 +1,0 @@
-Invoice Number : INV_John Doe2026-10-08_18-09-04
-Customer Name: John Doe
-Invoice date: 2026-10-08_18-09-04
-
-Pizzas:
