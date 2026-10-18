@@ -8,20 +8,44 @@
 <head>
     <title> Invoice</title>
 </head>
-<header>
-    <h1> Your Invoice</h1>
-</header>
+<div class="Invoice-text">
+    <h2> Invoice:</h2>
+    <div class="invoice_details">
+        <h3> Invoice Number: {{ invoice_number}} </h3>
+        <h3> Customer: {{ customer_name}} </h3>
+        <h3> Total: ${{ total }} </h3>
+    </div>
+    {% if cart_pizza %}
+                <ul class="cart_list">
+                {% for items, details in cart_pizza.items() %}
+                <li> {{ details['name'] }} {{  details['size']}} - Quantity: {{ details['quantity'] }} x ${{ details['price'] }}: <br>
+                        ${{ details['quantity'] * details['price'] }}
+                </li>
+                    
+                {% endfor %}
+                </ul>
+                {% else %}
+                <p> You did not order a Pizza</p>
+            {% endif %}
+            
+            <br>
 
-<h2> Invoice:</h2>
-{% for order in orders %}
-<h3> Invoice Number: {% order.invoice_number %} </h3>
-<h3> Name: {{order.customer_name}} </h3> 
-<h3> Pizzas:</h3>
-<ul>
-    {%%}
-    <li> {{order}} </li>
-</ul>
+            <h3> Drinks: </h3>
+            {% if cart_drink %}
+                <ul class="cart_list">
+                {% for items, details in cart_drink.items() %}
+                <li> {{ items }}: {{ details['quantity']}} x {{ details['price']}}:
+                    <br> ${{ details['quantity'] * details['price'] }}
+                    {% for item in session.get('cart_drink',{} )%}
+                    {% endfor %}
 
-
+                </li>
+                {% endfor %}
+                </ul>
+                {% else %}
+                <p> You did not order a drink</p>
+            {% endif %}
+    <p> Thank You for ordering at Dream Pizzas, we hope the flavour tastes like a dream</p>
+</div>
 
 {% endblock %}

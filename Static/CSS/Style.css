@@ -268,3 +268,23 @@ p {
 .margin {
     margin-left: 140px;
 }
+
+/* Invoice styling */
+.Invoice-text {
+    margin-left: 140px;
+    border: #720000 solid 5px;
+    padding: 5px;
+
+}
+
+.invoice_details {
+    font-family: "Figtree", sans-serif;
+    font-optical-sizing: auto;
+
+}
+
+h2 {
+  font-family: "Aboreto", system-ui;
+  font-weight: 400;
+  font-style: normal;
+}
