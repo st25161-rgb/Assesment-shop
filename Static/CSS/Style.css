@@ -139,6 +139,9 @@ h2 {
     display: flex;
     gap: 8px;
     margin-bottom: 5px;
+    font-family: "Aboreto", system-ui;
+    font-weight: 400;
+    font-style: normal;
 }
 
 .tab_radio {
@@ -195,6 +198,14 @@ h2 {
     font-style: normal;
 }
 
+.phone_number .delivery_form {
+    display:none;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap:20px;
+    align-items: start;
+    padding:20px;
+}
+
 /* This is for each tab div to show itself when selected */
 .tab_select:has(#tab-1:checked) ~ .tab_content_div .content_1,
 .tab_select:has(#tab-2:checked) ~ .tab_content_div .content_2,
@@ -204,6 +215,11 @@ h2 {
 .tab_select:has(#tab-drink:checked) ~ .tab_content_div .content_drink   {
     display: grid;
 }
+
+
+
+
+
 .description  {
     width: 200px;
 }
@@ -214,17 +230,6 @@ h2 {
     margin-left: 140px;
     display: flex;
     flex-direction: column;
-}
-
-h1 {
-    font-family: "Aboreto", system-ui;
-    font-weight: 400;
-    font-style: normal;
-}
-p {
-    font-family: "Acme", sans-serif;
-    font-weight: 400;
-    font-style: normal;
 }
 
 /* About page details */
@@ -274,7 +279,6 @@ p {
     margin-left: 140px;
     border: #720000 solid 5px;
     padding: 5px;
-
 }
 
 .invoice_details {

@@ -1,0 +1,5 @@
+Invoice Number : INV_S2026-10-19_19-49-06
+Customer Name: S
+Invoice date: 2026-10-19_19-49-06
+
+Pizzas:
