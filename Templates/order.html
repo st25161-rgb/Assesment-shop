@@ -100,11 +100,7 @@
 
                             {% endfor %}
                             </select>
-                            <select> value
-                                <option>
-                    
-                                </option>
-                            </select>
+
 
                             <label for="quantity"> Quantity:</label>
                             <input type="number" id="quantity" name="quantity" value=1 max="6" min="1" required>
@@ -177,7 +173,7 @@
                 <input type="tel" name="phone_number" id="phone_number" required><br>
 
                 <!-- Complete or cancel order buttons respectively ofc -->
-                <button type="submit_checkout" formaction="{{ url_for('checkout') }}" id="submit" onclick="return confirm('Want to double check everything is correct?')">Checkout</button>
+                <button type="submit_checkout" formaction="{{ url_for('checkout') }}" id="submit" onclick="return confirm('Want to double check everything is correct? Press cancel')">Checkout</button>
                 <button type="submit"  id="submit_cancel" formaction="{{ url_for('cancel_order') }}" onclick="return confirm('Are you sure you want to cancel your order?');">Cancel Order</button>
             </form>
 
@@ -187,7 +183,7 @@
                     const isDelivery = document.getElementById('delivery').checked; //checks for if element with id called delivery is checked, of
                     const addressInput = document.getElementById('address_checkout'); // gets the Input with id called address_checkout
 
-                    // If delivery is checked, then it will be required
+                    // If delivery is checked, then it will be required else it can be left blank
                     addressInput.required = isDelivery;
                 
                 }

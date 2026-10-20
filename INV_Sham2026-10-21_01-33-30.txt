@@ -1,0 +1,7 @@
+Invoice Number : INV_Sham2026-10-21_01-33-30
+Customer Name: Sham
+Invoice date: 2026-10-21_01-33-30
+
+Pizzas: {'Cheesy Meat Pizza (7.0)': {'name': 'Cheesy Meat Pizza', 'price': 7.0, 'quantity': 1, 'size': 'Small'}, 'Extra Meaty pizza (8.0)': {'name': 'Extra Meaty pizza', 'price': 8.0, 'quantity': 1, 'size': 'Small'}}
+
+Drinks: {}

@@ -14,25 +14,33 @@
             <h1 id="mainhead" >Order History</h1>
         </header>
         {% if orders %}
-            <table> <!--creates a table yeah, for easy reading of order details-->
+            <table class="order_display_table"> <!--creates a table yeah, for easy reading of order details-->
+
+                    <thead > <!--table head, where context for what the cells in its column contain-->
+                        
+                        <tr> <!--tr is table row-->
+                         
+                            <th class="order_display_head" >Invoice Number</th>
+                            <th class="order_display_head" >Customer Name</th>
+                            <th class="order_display_head" >Pizzas</th>
+                            <th class="order_display_head" >Drinks</th>
+                            <th class="order_display_head" >Total</th>
+                            <th class="order_display_head" >Date</th>
+                            <th class="order_display_head" >Address</th>
+                            <th class="order_display_head" >Phone Number</th>
+                            <th class="order_display_head" > Cancel Order </th>
+                        
+                        </tr>
+                        
+                    </thead>
                 
-                <thead> <!--table head, where context for what the cells in its column contain-->
-                    <tr> <!--tr is table row-->
-                        <th>Invoice Number</th>
-                        <th>Customer Name</th>
-                        <th>Pizzas</th>
-                        <th>Drinks</th>
-                        <th>Total</th>
-                        <th>Date</th>
-                    </tr>
-                </thead>
                 <tbody>
                     {% for order in orders %}
                         <tr>
-                            <td>{{order.invoice_number}}</td>
-                            <td>{{order.customer_name}}</td>
+                            <td class="order_display_cell">{{order.invoice_number}}</td>
+                            <td class="order_display_cell" >{{order.customer_name}}</td>
                             
-                            <td> <!-- because of how the json file is made, i have to do a more broken down dictionary -->
+                            <td class="order_display_cell" > <!-- because of how the json file is made, i have to do a more broken down dictionary -->
                                 {% if order.pizza %}
                                 <ul>
                                     {% for item in order.pizza.values() %}
@@ -53,7 +61,7 @@
                                 {%endif%}
                             </td>
                              
-                            <td>
+                            <td class="order_display_cell" >
                                 {% if order.drinks %}
                                 <ul>
                                     {% for item in order.drinks.values() %}
@@ -69,16 +77,20 @@
                                 NONE
                             {%endif%}
                             </td>
-                            <td>
+                            <td class="order_display_cell" >
                                 {{order.total}}
                             </td>
-                            <td>
+                            <td class="order_display_cell" >
                                 {{order.date}}
                             </td>
+                            <td class="order_display_cell" >
+                                {{order.address}}
+                            </td>
+                            <td class="order_display_cell" >{{order.phone_number}}</td>
                             
-                            <td>
+                            <td class="order_display_cell" >
                                 <form action="{{ url_for('cancel_saved_order', order_id=order.order_id) }}" method="post">
-                                    <button type="submit" id="submit" onclick="return confirm('Are you sure you want to cancel this order?');">Cancel Order</button>
+                                    <button type="submit" id="submit" onclick="return confirm('Are you sure you want to cancel this order?');" id="button">Cancel Order</button>
                                 </form>
                             </td>
                         </tr>

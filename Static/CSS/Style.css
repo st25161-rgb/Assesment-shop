@@ -15,7 +15,7 @@ body {
     font-style: normal;
     border: 5px solid #8a0000;
     font-size: 20px;
-    height: 100%;
+    height: 98%;
     position: absolute; /* the nav bar will stay in place on screen*/
     overflow: auto;
     top:5px;
@@ -77,6 +77,57 @@ h2 {
     display:flex;
     justify-content: center;
     font-size:60px;
+}
+
+h1 {
+    font-family: "Acme", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.introduction_body {
+    font-family: "Aboreto", system-ui;
+    font-weight: 400;
+    font-style: normal;
+}
+
+a {
+    color:black;
+
+}
+
+.image_animationContainer { /* Code for the pizza animation in intro to roll*/
+    box-sizing: border-box; /* border-box makes it so that the*/
+    padding:5px 50px;
+    width: 100%;
+    margin:10px 0px;
+    overflow: hidden;
+    white-space: nowrap;
+    background-color: #ab5f5f57;
+    border-radius: 25px;
+    position: relative;
+    border:#720000;
+    border-style: solid groove;
+}
+
+.intro_img { /* the code for the image and animation insertion*/
+    height: 200px;
+    display: inline-block;
+    animation: scrollLeft 15s linear infinite;
+}
+
+
+
+
+
+
+
+
+
+
+a :hover {
+    font-size: larger;
+    text-decoration: underline rgb(110, 29, 29);
 }
 
 #pizzatype_text {
@@ -213,7 +264,8 @@ h2 {
 .tab_select:has(#tab-4:checked) ~ .tab_content_div .content_4,
 .tab_select:has(#tab-5:checked) ~ .tab_content_div .content_5,
 .tab_select:has(#tab-drink:checked) ~ .tab_content_div .content_drink   {
-    display: grid;
+    display: flex;
+    justify-content: space-evenly;
 }
 
 
@@ -224,12 +276,14 @@ h2 {
     width: 200px;
 }
 
+
+
 /* ABout page */
 
 .introduction {
     margin-left: 140px;
     display: flex;
-    flex-direction: column;
+    justify-content: center;
 }
 
 /* About page details */
@@ -255,18 +309,20 @@ h2 {
 }
 
 
-#enlargen1 {
-    font-size: 50px;
-    text-decoration: underline black 5px;
-}
 
 #detail {
     text-decoration: underline black 2px;
 
 }
-#enlargen {
-    font-size: 40px;
-    text-decoration: none;
+
+.about_text {
+    font-size: 25px;
+}
+
+#style_aboutText {
+    font-family: "Figtree", sans-serif;
+    font-optical-sizing: auto;
+
 }
 
 
@@ -291,4 +347,52 @@ h2 {
   font-family: "Aboreto", system-ui;
   font-weight: 400;
   font-style: normal;
+}
+
+.order_display_head {
+    border: #720000 5px solid ; 
+    padding: 10px;
+    font-family: "Acme", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 25px;
+    text-decoration: underline rgb(100, 23, 23);
+}
+
+.order_display_cell {
+    border: #720000 5px;
+    border-style:  none solid solid solid; 
+    padding: 10px;
+    font-family: "Figtree", sans-serif;
+    font-optical-sizing: auto;
+    font-size: 15px;
+    padding: -5px;
+}
+
+.order_display_table {
+    background-color: #ab5f5f53;
+    padding:10px;
+    border:#720000 solid 10px;
+
+}
+
+#button {
+    padding: 15px;
+    background-color: green;
+}
+
+@keyframes scrollLeft /* the keyframe for animatiomn */ {
+
+    0% {
+        transform: translateX(600%) rotate(0deg) ; /*starting of animation*/
+    }
+
+    50% {
+        transform: translateX(0%) rotate(-1080deg); /* end of animation */
+
+    }
+
+    100% {
+        transform: translateX(600%) rotate(0deg)
+    }
 }

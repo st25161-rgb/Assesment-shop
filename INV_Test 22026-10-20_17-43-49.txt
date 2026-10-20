@@ -1,0 +1,5 @@
+Invoice Number : INV_Test 22026-10-20_17-43-49
+Customer Name: Test 2
+Invoice date: 2026-10-20_17-43-49
+
+Pizzas: {'Margherita (5.0)': {'name': 'Margherita', 'price': 5.0, 'quantity': 1, 'size': 'Small'}}

@@ -22,9 +22,26 @@
 </head>
 <main>    
     <div class="introduction">
+        <h1  id="base-title">Dream Pizzas</h1>
+        <br>
         <h1> Order Your Dream Pizza </h1>
-        <p> Choose from our delicious selection of pizzas and drinks! </p>
+        <p class="introduction_body"> Choose from our delicious selection of pizzas and drinks! <br> <br>
+           <str> Dream Pizzas</str> offers a variety for both drinks and pizzas, with delivery and pick up options. <br>
+           So give us a call, our pizzarea information is in the <a href="{{url_for('about') }}">About page </a>.
+            <br> Order from the navbar or click the pizza! 
+        </p>
+
+        <div class="introAnimation_container">
+        <div class="image_animationContainer">
+            <a href="{{url_for('order') }}" ><img src="/static/Images/pizza_transparent.jpg" alt="Pizza Image transparent" class="intro_img width=250px" height="250px" ></a>
+        </div>
+        </div>
+
+        </div>
+
     </div>
+
+    
 
 
 </main>

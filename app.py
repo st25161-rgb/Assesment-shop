@@ -33,7 +33,7 @@ def calculate_total(cart_pizza, cart_drink):
     
     return total
 
-def initialise_database():
+def initialise_database(): #This is where the rows in the database are made and how to display information, numbers stirngs ect
     with sqlite3.connect('order.db') as conn:
         cursor = conn.cursor()
         cursor.execute('''
@@ -44,7 +44,9 @@ def initialise_database():
             pizza TEXT,
             drinks TEXT,
             total REAL,
-            date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            address TEXT,
+            phone_number TEXT
             );
         ''')
         conn.commit()
@@ -121,7 +123,7 @@ def about():
 def invoice():
     return render_template("invoice.html")
 
-@app.route('/order_display')
+@app.route('/order_display') 
 def order_display():
     with sqlite3.connect('order.db') as conn:
         conn.row_factory = sqlite3.Row
@@ -137,17 +139,21 @@ def order_display():
                 'pizza': json.loads(row['pizza'] or '{}'), # or '{}' prevents crashing
                 'drinks': json.loads(row['drinks'] or '{}' ), # or '{}' prevents crashing if the json is empty
                 'total': row['total'],
-                'date': row['date']
+                'date': row['date'],
+                'address': row['address'],
+                'phone_number': row['phone_number']
             })
 
         return render_template("order_display.html", orders=orders) 
 
 
-
+#routes and stuff that send and take data
 
 @app.route('/checkout', methods=['POST'])
 def checkout():
     customer_name = request.form['customer_name'].strip().title() #Makes sure the name is 'valid'
+    address = request.form['address'].title()
+    phone_number = request.form['phone_number']
 
     if not customer_name:   #if the name isnt valid, tells user to enter a name and redierects back to order page
         flash("Customer name is required")
@@ -170,9 +176,9 @@ def checkout():
     with sqlite3.connect('order.db') as conn:
         cursor = conn.cursor()
         cursor.execute('''
-            INSERT INTO orders (invoice_number, customer_name, pizza, drinks, total)
-            VALUES (?, ?, ?, ?, ?)
-        ''', (invoice_number, customer_name, json.dumps(cart_pizza), json.dumps(cart_drink), total))
+            INSERT INTO orders (invoice_number, customer_name, pizza, drinks, total, address, phone_number)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
+        ''', (invoice_number, customer_name, json.dumps(cart_pizza), json.dumps(cart_drink), total, address, phone_number ))
         conn.commit()
     
     invoice_filename = f"{invoice_number}.txt" #makes the invoice number into a string
@@ -182,7 +188,9 @@ def checkout():
             f.write(f"Invoice Number : {invoice_number}\n")
             f.write(f"Customer Name: {customer_name}\n")
             f.write(f"Invoice date: {invoice_date}\n")
-            f.write(f"\nPizzas:\n")
+            f.write(f"\nPizzas: {cart_pizza}\n")
+            f.write(f"\nDrinks: {cart_drink}\n")
+
 
         for pizza, details in cart_pizza.items():
             subtotal = details['price'] * details['quantity']
@@ -210,7 +218,9 @@ def checkout():
                             total = total,
                             customer_name = customer_name,
                             invoice_date = invoice_date,
-                            invoice_number = invoice_number
+                            invoice_number = invoice_number,
+                            phone_number=phone_number,
+                            address=address
                             )
 
 
@@ -242,12 +252,7 @@ def cancel_order():
     session.modified = True
     flash(f"Cart has been emptied")
 
-    return render_template("invoice.html",
-                            cart_drink = cart_drink,
-                            cart_pizza = cart_pizza,
-                            total = total,
-                            customer_name = customer_name,
-                            invoice_date = invoice_date ) 
+    return redirect(url_for('order')) 
 
 
 @app.route('/add_to_cart_drinks', methods=["POST"])

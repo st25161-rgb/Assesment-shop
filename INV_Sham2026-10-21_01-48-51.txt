@@ -1,0 +1,7 @@
+Invoice Number : INV_Sham2026-10-21_01-48-51
+Customer Name: Sham
+Invoice date: 2026-10-21_01-48-51
+
+Pizzas: {'Margherita (5.0)': {'name': 'Margherita', 'price': 5.0, 'quantity': 1, 'size': 'Small'}}
+
+Drinks: {'Coke (Small)': {'name': 'Coke', 'price': 1.5, 'quantity': 1, 'size': 'Small'}}
